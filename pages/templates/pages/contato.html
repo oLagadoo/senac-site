@@ -1,12 +1,68 @@
 {% extends "pages/base.html" %}
 
-{% block title %}Contato – Senac Site Online{% endblock %}
+{% block title %}Contato, Senac Site Online{% endblock %}
 
 {% block content %}
-  <h2>Pagina de Contato</h2>
-  <p>Atividade 2</p>
 
-  <p>
-    Senac Python MAF-2025.3.
-  </p>
+<section aria-labelledby="titulo-contato">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1 id="titulo-contato" class="card-title mb-3">
+        <i class="fa-solid fa-envelope me-2 text-primary"></i>
+        Contato
+      </h1>
+
+      <p class="mb-4">
+        Entre em contato conosco pelos canais abaixo ou envie uma mensagem pelo formulário.
+      </p>
+
+      <ul class="list-group mb-4">
+        <li class="list-group-item">
+          <i class="fa-solid fa-at me-2 text-secondary"></i>
+          <a href="mailto:contato@senac.com.br">contato@senac.com.br</a>
+        </li>
+        <li class="list-group-item">
+          <i class="fa-solid fa-phone me-2 text-secondary"></i>
+          <a href="tel:+5511999999999">(11) 99999-9999</a>
+        </li>
+      </ul>
+
+      {% if form.errors %}
+          <div class="alert alert-danger" role="alert">
+              <ul class="mb-0">
+                  {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+              </ul>
+          </div>
+      {% endif %}
+
+      <form action="{% url 'contato' %}" method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.nome.label_tag }}
+            {{ form.nome }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.mensagem.label_tag }}
+            {{ form.mensagem }}
+        </div>
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
